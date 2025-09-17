@@ -1,0 +1,67 @@
+.features {
+  display: flex; /* Make the features div a flex container */
+  width: 100%;
+  margin-right: 40px;
+  margin-top: 30px;
+  margin-bottom: 15px;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 0px 5px;
+}
+
+.search-container {
+  display: flex;
+  align-items: center;
+  width: 60%;
+  justify-content: space-between;
+}
+
+.search-container input {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 5px 10px;
+  font-size: 16px;
+  width: 100%;
+}
+
+.search-container input:focus {
+  outline: none;
+  border-color: #999;
+}
+
+.clear-icon {
+  height: 24px;
+  padding: 5px;
+  cursor: pointer; /* Cursor pointer for clear icon */
+}
+
+.feature-btns {
+  display: flex;
+  align-items: center;
+  margin-left: 15px; /* Space between input and buttons */
+  margin-right: 40px;
+  padding: 0 10px;
+}
+
+.feature-btns button {
+  border: none;
+  background-color: white;
+  padding: 0px 15px;
+  font-size: 20px;
+  font-weight: bolder;
+  cursor: pointer; /* Cursor pointer for buttons */
+}
+
+.feature-btns button i {
+  font-size: 20px;
+}
+
+.column-filter {
+  display: block;
+  width:100%;
+  padding-block: 0px;
+  padding-inline: 0px;
+  border-spacing: 0px;
+  font-size: 0.8rem;
+}
+

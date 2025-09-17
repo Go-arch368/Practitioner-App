@@ -1,0 +1,17 @@
+@import "../../node_modules/spa-central-styles/dist/style.css";
+
+.app-container {
+    display: flex;
+    flex-direction: column;
+    max-height: 100vh;
+}
+
+@media screen and (max-width:767px) {
+    .router-div{
+        padding:0.5rem !important;
+    }
+}
+
+html,body,#root {
+    height:100%
+}
