@@ -1,13 +1,14 @@
+"use client";
+
 import React from "react";
 import CustomDropdown from "@/components/common/CustomDropdown";
-import { OptionType } from '@/components/common/CommonFunction'
+import { OptionType } from "@/components/common/CommonFunction";
 
 interface SelectNetworkProps {
-     networkOptions:{label:string;value:string}[];
-     initialSelection:OptionType;
-     handleNetworkUpdate:(selectedValue:any,name:string) =>void
+  networkOptions: { label: string; value: string }[];
+  initialSelection: OptionType;
+  handleNetworkUpdate: (selectedValue: OptionType, name: string) => void;
 }
-
 
 const SelectNetwork: React.FC<SelectNetworkProps> = ({
   networkOptions,
@@ -30,6 +31,3 @@ const SelectNetwork: React.FC<SelectNetworkProps> = ({
 };
 
 export default SelectNetwork;
-
-
-

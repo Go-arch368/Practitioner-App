@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { FormFieldConfig } from "@/types/formField";
 
+
 /**
  * Hook to manage a single form field's value, error, formatting, and validation.
  */
 export function useFormField(config: FormFieldConfig) {
   const [value, setValue] = useState<string | string[]>('');
   const [error, setError] = useState<string | null>(null);
+  console.log(value)
 
   // Handles input change, applies formatting if provided.
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {

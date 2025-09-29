@@ -1,0 +1,36 @@
+{
+  "practitioners": [
+    {
+      "providerId": "P001",
+      "credId": "C001",
+      "lastName": "Gowtham",
+      "firstName": "Dr.",
+      "middleName": "K",
+      "degrees": "MBBS, MD",
+      "primarySpecialty": "Cardiologist",
+      "networkStatus": "Active",
+      "primaryServiceCity": "Chennai",
+      "primaryServiceState": "TN",
+      "primaryServiceZip": "600001",
+      "tin": "TIN12345",
+      "npiType1": "NPI98765",
+      "originalRecordId": 1
+    },
+    {
+      "providerId": "P002",
+      "credId": "C002",
+      "lastName": "Brindha",
+      "firstName": "Dr.",
+      "middleName": "S",
+      "degrees": "MBBS, MS",
+      "primarySpecialty": "Dermatologist",
+      "networkStatus": "Inactive",
+      "primaryServiceCity": "Bangalore",
+      "primaryServiceState": "KA",
+      "primaryServiceZip": "560001",
+      "tin": "TIN67890",
+      "npiType1": "NPI12345",
+      "originalRecordId": 2
+    }
+  ]
+}

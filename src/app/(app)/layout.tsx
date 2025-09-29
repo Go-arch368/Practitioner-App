@@ -1,27 +1,15 @@
 // app/layout.tsx
-import Header from '@/components/common/Header';
-import Footer from '@/components/common/Footer';
-// If using CSS modules (recommended):
+import React from "react";
+import "@/styles/CustomStyles.css";
 
-import "@/styles/CustomStyles.css"
-import "../../styles/CustomStyles.css"
+type LayoutProps = {
+  children: React.ReactNode;
+};
 
-
-
-export default function MainLayout({ children }: { children: React.ReactNode }) {
+export default function Layout({ children }: LayoutProps) {
   return (
-    <html lang="en">
-      <body>
-        <div className="main-layout">
-          <div className="main-header">
-          <Header/>
-          </div>
-          <div className="main-content" style={{ flex: 1, overflowY: 'auto' }}>
-            {children}
-          </div>
-           <Footer /> 
-        </div>
-      </body>
-    </html>
+    <div className="main-layout">
+      {children}
+    </div>
   );
 }

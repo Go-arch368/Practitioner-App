@@ -15,7 +15,7 @@ import { Link } from 'react-router-dom';
 import { FaRegFile, FaSortUp, FaSortDown } from 'react-icons/fa';
 import clearIco from '../assets/images/clear-icon.png'; // Make sure your assets path is correct
 
-import '../../../component-styles/Features.css';
+import "../../src/components/component-styles/Features.css"
 import { degreeList } from '@/constants/Constants';
 import Practitioner from '../components/model/Practitioner';
 

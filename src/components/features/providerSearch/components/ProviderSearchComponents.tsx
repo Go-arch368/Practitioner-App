@@ -13,7 +13,7 @@ function ProviderSearchComponents(): React.JSX.Element {
   switch (selectedOption) {
     case 'allProvRadio':
       return <ProviderSearchAllProv />;
-    case 'groupRadio':
+    case 'groupsRadio':
       return <ProviderSearchGroup />;
     case 'practitionerRadio':
       return <ProviderSearchPractitioner />;
@@ -22,7 +22,7 @@ function ProviderSearchComponents(): React.JSX.Element {
     case 'facilityRadio':
       return <ProviderSearchFac />;
     default:
-      return <ProviderSearchAllProv />;
+      return <ProviderSearchAllProv/>;
   }
 }
 

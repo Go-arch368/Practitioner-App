@@ -6,7 +6,7 @@ import Logo from "@/assets/images/image.png";
 
 type HeaderProps = {
   handleClick?: () => void;
-};
+}
 
 export default function Header({ handleClick }: HeaderProps) {
   return (

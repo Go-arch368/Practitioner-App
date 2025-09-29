@@ -52,3 +52,12 @@
 .sidebar input[type="checkbox"] {
   margin: 0 20px 0 0;
 }
+
+.sidebar-content label {
+  border : 1.5px solid #9f9f9f;
+  background-color: #f1F3f1;
+  text-align: left;
+  padding: 8px 0px 3px 5px;
+  border-radius: 6px;
+}
+

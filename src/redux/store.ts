@@ -1,14 +1,17 @@
 import { configureStore } from '@reduxjs/toolkit';
-import groupsReducer from './groupslice';
-import noResultReducer from './NoResultslice';
-import facilitiesReducer from './Facilityslice';
 
+import groupsReducer from "./groupSlice"
+import noResultReducer from "./NoResultSlice"
+import facilitiesReducer from "./FacilitySlice"
 import practitionersReducer from "./PractitionerSlice"
 
-import allProviderReducer from "./AllProviderSlice"
-import corporateEntityReducer from './CorporateEntityslice';
-import metadataReducer from './metadataslice';
-import configDataReducer from './ConfigDataslice';
+
+import allProvidersReducer from "./AllProviderSlice"
+
+import corporateEntityReducer from "./CorporateEntitySlice"
+
+import metadataReducer from "./metadataSlice"
+import configDataReducer from "./ConfigDataSlice"
 
 export const store = configureStore({
   reducer: {

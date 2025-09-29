@@ -3,6 +3,8 @@ import { useDispatch } from 'react-redux';
 import { resetGroupRepricingType } from '@/redux/groupSlice';
 import { resetFacilitiesType } from '../redux/FacilitySlice';
 import { AppDispatch } from '../redux/store';
+import { resetPractitionersShouldFetch } from '@/redux/PractitionerSlice';
+import next from 'next';
 
 interface ExpandCollapseProps {
   title: string;
@@ -28,10 +30,10 @@ const ExpandableComponent = forwardRef<ExpandedComponentRef, ExpandCollapseProps
 
     // Toggles expansion and runs any relevant reset logic
     const toggleExpand = () => {
-      const nextExpanded = !isExpanded;
-      setIsExpanded(nextExpanded);
+      const nextExpanded = !isExpanded;//true
+      setIsExpanded(nextExpanded);//show inputs when true
 
-      if (!nextExpanded) {
+      if (!nextExpanded) { //false
         switch (searchPage) {
           case 'groupSearch':
             dispatch(resetGroupRepricingType());
@@ -48,7 +50,7 @@ const ExpandableComponent = forwardRef<ExpandedComponentRef, ExpandCollapseProps
           case 'practitionerSearch':
             // TODO: Populate with resets for Advanced Search fields as needed
             break;
-          default:
+          default:  
             break;
         }
       }
@@ -75,3 +77,4 @@ const ExpandableComponent = forwardRef<ExpandedComponentRef, ExpandCollapseProps
 );
 
 export default ExpandableComponent;
+

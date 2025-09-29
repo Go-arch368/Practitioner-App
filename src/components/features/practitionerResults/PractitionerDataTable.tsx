@@ -3,7 +3,7 @@ import { ColumnDef } from '@tanstack/react-table';
 import { Link } from 'react-router-dom';
 import { FaRegFile } from 'react-icons/fa';
 import SearchResultTable from '@/utils/SearchResultTable';
-import '../../../component-styles/Features.css';
+// import '@/component-styles/Features.css';
 import { Filters } from './PractitionerFilters';
 import Practitioner from '../../model/Practitioner';
 

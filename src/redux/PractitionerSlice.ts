@@ -35,8 +35,10 @@ export const fetchPractitioners = createAsyncThunk<
 >(
   'practitioners/fetchPractitioners',
   async (practitionerRequest, { rejectWithValue }) => {
+    console.log("Before req", practitionerRequest)
     try {
       const response = await PractitionerService.searchPractitioner(practitionerRequest);
+      console.log("After req", response)
       if (response.status !== 200) {
         const errorResponse: AppError = {
           errorStatus: response.status,

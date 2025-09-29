@@ -1,3 +1,511 @@
+/* ==========================
+   Global Theme Variables
+========================== */
+:root {
+  --primary: #004589;
+  --white: white;
+  --black: black;
+  --dodgerblue: #1E90FF;
+}
+
+/* ==========================
+   Divider
+========================== */
+.divider {
+  height: 6px;
+  box-shadow: 0px 4px 0px 2px lightgray;
+}
+
+/* ==========================
+   Tooltip Styles
+========================== */
+.tooltip-inner {
+  background-color: var(--white) !important;
+  color: var(--black) !important;
+  border: 1px solid black;
+  box-shadow: none !important;
+  max-width: 300px !important;
+  min-width: 100px !important;
+  width: auto !important;
+  white-space: normal !important;
+  padding: 10px !important;
+}
+
+.tooltip.show {
+  opacity: 1 !important;
+}
+
+/* ==========================
+   Form Controls
+========================== */
+.form-check-input:checked {
+  background-color: var(--primary) !important;
+  border-color: var(--primary) !important;
+}
+
+.custom-color {
+  color:var(--primary) !important
+}
+
+.dodgerblue{
+  color: var(--dodgerblue) !important;
+}
+
+.main-form{
+  margin-top: -5%;
+}
+
+.is-disabled{
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+.form-check-input[type="radio"] {
+  appearance: none;
+  -webkit-appearance: none;
+  background-color: #dedede;
+  border: 2px solid #004489;
+  border-radius: 50%;
+  width: 1.1em;
+  height: 1.1em;
+  position: relative;
+  cursor: pointer;
+  margin-top: 0.2em;
+    margin-right: 0.4em;
+  transition: all 0.3s ease-in-out;
+}
+
+.form-check-input[type="radio"]:checked {
+  background-color: #004489;
+  border-color: #004489;
+}
+
+.form-check-input[type="radio"]:checked::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0.5em;
+  height: 0.5em;
+  background-color: white;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.form-check-label {
+  display: flex !important;
+  align-items: center;
+  cursor: pointer;
+  margin-bottom: 0.5rem;
+  justify-content: flex-start !important;
+}
+
+/* ==========================
+   Form Layout
+========================== */
+.body-wrapper {
+  font-size: 0.8rem;
+  max-width: 85vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto; /* center horizontally */
+}
+
+.body-wrapper form {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.floating-error
+
+.form-control {
+  max-width: none;
+  width: 100%;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+}
+
+.form-group-wrapper {
+  flex: 0 0 calc(100% / 6);
+  max-width: calc(100% / 6);
+  box-sizing: border-box;
+  padding: 0.5rem;
+}
+
+.form-group label {
+  font-weight: 500;
+  margin-bottom: 0.25rem;
+  text-align: center;
+}
+
+.form-group.inline-label {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding-right: 1rem;
+  min-width: 250px;
+  flex: 1 1 250px;
+}
+
+.form-group.inline-label label {
+  margin-bottom: 0;
+  white-space: nowrap;
+}
+
+.form-group.inline-label input {
+  flex: 1;
+}
+
+.inline-label-flex {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+}
+
+.inline-label-flex label {
+  margin-bottom: 0;
+  min-width: 120px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.inline-label-flex > div {
+  flex-grow: 1;
+}
+
+/* ==========================
+   Error States
+========================== */
+.floating-error {
+  margin-top: 0.25rem;
+  width: 100%;
+}
+
+.error-box {
+  background-color: #f8d7da;
+  color: #dc3545;
+  padding: 6px 10px;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.01);
+  width: max-content;
+  max-width: 100%;
+  white-space: normal;
+}
+
+.input-error {
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  border-color: #dc3545 !important;
+  box-shadow: 0 0 0 0.2rem rgba(220, 59, 69, 0.25);
+}
+
+/* ==========================
+   Dropdowns
+========================== */
+.dropdown-toggle {
+  background-color: white !important;
+  color: #eee !important;
+  border: 1px solid #999 !important;
+}
+
+.dropdown-menu {
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.dropdown-list {
+  color: #000 !important;
+  width: 100%;
+  text-align: left;
+}
+
+.dropdown-list:hover {
+  background-color: #fefefe;
+}
+
+.dropdown-placeholder {
+  color: #6c757d !important;
+  opacity: 1;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
+}
+
+.dropdown-select {
+  color: #eee !important;
+}
+
+/* ==========================
+   Cards
+========================== */
+.styled-card {
+  border: 1px solid black;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  overflow: visible;
+}
+
+.styled-card-header {
+  background-color: #004489;
+  color: white;
+  padding: 0.25rem 0.75rem;
+  font-size: 1.1rem;
+  border: 1px solid #004489;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.form-pad {
+  padding-left:4vw;
+  padding-bottom:2.5vh;
+  padding-top:1vh;
+  padding-right:1vw
+}
+
+.form-group label {
+  font-weight: 500;
+  margin-bottom: 0.25rem;
+  text-align: center;
+}
+
+.form-group.inline-label {
+  display: flex;
+  align-items: center;
+  gap:1rem;
+  padding-right: 1rem;
+  min-width: 250px;
+  flex:1 1 250px
+}
+
+.form-group.inline-label label {
+  margin-bottom : 0;
+  white-space: nowrap;
+}
+
+.form-group.inline-label input {
+  flex:1
+}
+
+.inline-label-flex {
+  display: flex;
+  align-items: center;
+  gap:1rem;
+  width:100%
+}
+
+.inline-label-flex label {
+  margin-bottom: 0;
+  min-width: 120px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* ==========================
+   Modals
+========================== */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(128, 128, 128, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1050;
+}
+
+.modal-content {
+  background-color: white;
+  width: 25vw;
+  padding: 2rem;
+  border-radius: 8px;
+  position: relative;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.close-button {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.75rem;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+/* ==========================
+   Misc Utilities
+========================== */
+.custom-color {
+  color: var(--primary) !important;
+}
+
+.dodgerblue {
+  color: var(--dodgerblue) !important;
+}
+
+.main-form {
+  margin-top: -5%;
+}
+
+.is-disabled {
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+.pagination-feature {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.logo-link {
+  display: inline-block;
+  outline: none;
+}
+
+.logo-link:focus {
+  outline: none;
+}
+
+.logo-link img {
+  border: 2px solid transparent;
+  transition: border 0.3s ease;
+  display: block;
+}
+
+.logo-link:hover img,
+.logo-link:focus img {
+  border: 2px solid #004489;
+}
+
+.logo-link:focus img {
+  border-radius: 4px;
+}
+
+.logo-link img:active {
+  outline: none;
+  box-shadow: none;
+}
+
+.selected-option {
+  background-color: #e6feff;
+  font-weight: 500;
+}
+
+.invisible-checkbox {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.invisible-check.form-check-input {
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+  position: absolute;
+  right: 0;
+  pointer-events: none;
+  transform: scale(0.80);
+  transform-origin: top center;
+}
+
+.large-spinner {
+  width: 4rem;
+  height: 4rem;
+  margin: auto;
+}
+
+.sortable-header {
+  position: relative;
+  margin-left: 30%;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.sortable-header:hover {
+  background-color: lightgray;
+}
+
+.sortable-header:hover .sort-link {
+  opacity: 1;
+}
+
+.sort-link:hover {
+  background-color: transparent; /* Prevent background */
+}
+
+.sort-link + .sort-link {
+  margin-left: 8px;
+}
+
+.sort-link svg {
+  font-size: 1em;
+  color: white;
+  vertical-align: middle;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.sort-link.active svg {
+  color: darkgray;
+}
+
+.sort-link:hover svg {
+  transform: scale(1.25);
+}
+
+th.sortable-header {
+  text-align: center !important;
+  vertical-align: bottom !important;
+}
+
+input.column-filter {
+  text-align: center !important;
+  vertical-align: bottom !important;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  gap: 0.25rem;
+  justify-content: space-between;
+}
+
+.sort-icons {
+  display: flex;
+  align-items: center;
+}
+
+.header-text {
+  display: inline-block;
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 0 1rem; /* Optional padding */
+}
+
 .main-layout {
   display: flex;
   flex-direction: column;
@@ -5,57 +513,192 @@
   overflow: hidden;
 }
 
-.main-header {
-  flex-shrink: 0;
-}
-
 .main-content {
   flex: 1;
   overflow-y: auto;
 }
 
-.main-footer {
+.main-header {
   flex-shrink: 0;
 }
 
-.modal-overlay {
-  position: relative;
-  top:0;
-  left: 0;
+.main-content-wrapper {
+  display: flex;
+  flex-direction: row;
+  width:100%;
+  margin-top: 2vh;
+}
+
+.feature-header-text {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.feature-header-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.create-body-wrapper {
+  font-size: 0.8rem;
+  max-width: 45vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: 1vw;
+  display: flex;
+  flex-direction: row;
   width: 100%;
-  height: 100%;
-  background-color: rgba(128,128,128,0.5);
+  margin-top: 2vh;
+}
+
+.main-content-body {
+  flex: 1;
+  margin-left: 250px;
+  width: 80%;
+}
+
+.features-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 0.25rem 0.75rem;
+  background-color: #004489;
+}
+
+.create-body-wrapper form {
+  width: 100%;
+}
+
+/* Wrapper for consistent label-input layout in CreateForm */
+.create-form-group {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+/* Labels with fixed width to accommodate longest text */
+.create-form-label {
+  min-width: 160px; /* Adjust as needed */
+  white-space: nowrap;
+  text-align: right;
+  flex-shrink: 0;
+  font-weight: 500;
+}
+
+/* Inputs and selects take remaining space */
+.create-form-input,
+.create-form-select {
+  flex: 1;
+  max-width: 100%;
+}
+
+/* Error modal overlay */
+.error-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.2);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1050;
+  z-index: 1000;
 }
 
-.main-content {
-   background-color: white;
-   width: 25vw;
-   padding:2rem;
-   border-radius: 8px;
-   position: relative;
-   box-shadow: 0 2px 10px rgba(0,0,0,0.3);
-   display: flex;
-   flex-direction:column;
-   align-items: center;
-   justify-content: center;
-  }
+/* Error modal content */
+.error-modal-content {
+  background: white;
+  padding: 20px 30px;
+  border-radius: 8px;
+  width: 40vw; /* Adjust width for rectangle shape */
+  max-width: 50%;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  position: relative;
+  text-align: center;
+}
 
-.close-button{
+/* Error close button */
+.error-close-button {
   position: absolute;
-  top:0.5rem;
-  right:0.75rem;
+  top: 10px;
+  right: 15px;
   background: none;
-  border:none;
-  font-size: 1.5rem;
+  border: none;
+  font-size: 24px;
   cursor: pointer;
-}  
+}
 
-.large-spinner {
-  width: 4rem;
-  height:4rem;
-  margin:auto
+.error-close-button:hover,
+.error-close-button:focus {
+  color: blue; /* optional: makes the outline rounded */
+}
+
+/* Blurred background state */
+.blurred {
+  filter: blur(4px);
+  pointer-events: none;
+}
+
+
+.table-container {
+  max-height: 500px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+}
+
+/* Hide scrollbar for WebKit browsers */
+.table-container::-webkit-scrollbar {
+  display: none;
+}
+
+.table thead th {
+  position: sticky;
+  top: 0;
+  background-color: #fff;
+  z-index: 2;
+}
+
+thead th.sortable-header:hover {
+  background-color: lightgray;
+}
+
+thead th .sort-link {
+  opacity: 0.5;
+  transition: opacity 0.2s ease;
+}
+
+thead th.sortable-header:hover .sort-link {
+  opacity: 1;
+}
+
+thead th .sort-link:hover {
+  background-color: transparent;
+}
+
+.radio-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1.5rem; /* space between radios, adjust as needed */
+}
+
+/* Make labels block-level for the main label */
+.label-block {
+  display: flex;
+  align-items: center;
+  margin-right: 1rem;
+}
+
+/* Each radio+label pair inline */
+.form-check-inline {
+  display: flex;
+  align-items: center;
+  margin-right: 1.2rem;
+  white-space: nowrap;
 }

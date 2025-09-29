@@ -12,8 +12,13 @@ import {
   networkField,
   internalIdField,
   viantHNSIdField,
+
   contractField,
+ viantCEIdField,
+ 
 } from "../constants/formFields";
+
+
 
 export const usePractitionerSearchForm = () => {
   const lastName = useFormField(lastNameField);
@@ -30,6 +35,7 @@ export const usePractitionerSearchForm = () => {
   const network = useFormField(networkField);
   const internalId = useFormField(internalIdField);
   const viantHNSId = useFormField(viantHNSIdField);
+  const viantCEId = useFormField(viantCEIdField)
   const contractNo = useFormField(contractField);
 
   const fields = [
@@ -45,21 +51,25 @@ export const usePractitionerSearchForm = () => {
     internalId,
     viantHNSId,
     contractNo,
+    viantCEId
   ];
 
-  const validateAll = () => fields.map(field => field.validate()).every(valid => !valid);
+  const validateAll = () => fields.map(field => field.validate()).every(valid => valid);
   const hasAnyFieldFilled = () =>
-    fields.some(field =>
-      field.isMulti ? field.value.length > 0 : field.value !== ""
+    fields.some(field =>field.value?
+      field.isMulti ? field.value.length > 0 : field.value !== "":false
     );
   const validateAllWithoutError = () =>
-    fields.map(field => field.validateWithoutError()).every(valid => !valid);
+    fields.map(field => field.validateWithoutError()).every(valid => valid);
+
+  const cleanHypen = (val:string|string[]) =>
+    typeof val === "string" ? val.replace(/\D/g,""):val;
 
   const getFormData = () => ({
     lastName: lastName.value,
     firstName: firstName.value,
-    ssn: ssn.value,
-    tin: tin.value,
+    ssn: cleanHypen(ssn.value),
+    tin: cleanHypen(ssn.value),
     credId: credId.value,
     npiType1: npiType1.value,
     state: state.value,
@@ -67,6 +77,7 @@ export const usePractitionerSearchForm = () => {
     caqhProviderId: caqhId.value,
     internalId: internalId.value,
     viantHNSId: viantHNSId.value,
+    viantCEId:viantCEId.value,
     contractNo: contractNo.value,
   });
 

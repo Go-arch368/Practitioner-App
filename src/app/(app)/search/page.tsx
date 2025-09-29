@@ -1,7 +1,17 @@
+"use client"
 import React from 'react'
+import ProviderSearchApp from '@/components/features/providerSearch/ProviderSearchApp'
+import ReduxProviderWrapper from '@/app/providers/ProviderWrapper'
 
 export default function Page (){
   return (
-    <div>This is the search component   </div>
+<ReduxProviderWrapper>
+
+  
+       <ProviderSearchApp/>
+  
+ 
+</ReduxProviderWrapper>
+ 
   )
 }

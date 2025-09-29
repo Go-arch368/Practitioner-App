@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import React from "react";
-import "@/component-styles/SidebarLegends.css";
+
+import "../../../component-styles/SidebarLegends.css"
 
 const SidebarLegends: React.FC = () => {
   return (

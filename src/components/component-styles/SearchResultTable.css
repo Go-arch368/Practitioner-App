@@ -1,0 +1,9 @@
+
+.checkbox-cell input[type="checkbox"]{
+    width:16px;
+    height:16px;
+    border:2px solid #333;
+    border-radius: 4px;
+    cursor: pointer;
+    accent-color: #0078d4;
+}

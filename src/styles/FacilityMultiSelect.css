@@ -1,0 +1,29 @@
+.selected-row {
+  background-color: lightblue; /* Highlight selected row */
+  width: 100%;
+}
+
+.multi-select-table-container {
+  display: grid;
+  grid-template-rows: 1fr auto;
+  min-height: 200px;
+  background-color: white;
+  margin-right: 30px;
+}
+
+.multi-select-flex-container {
+  display: flex;
+  margin-left: 2vw;
+  margin-top: 0.5vh;
+}
+
+.multi-select-div {
+  border: 1px solid black;
+  border-collapse: collapse;
+  margin-bottom: 10px;
+  width: 20vw;
+}
+
+.multi-select-h3 {
+  text-align: center;
+}
