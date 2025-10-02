@@ -14,7 +14,8 @@ import {
 import { Link } from 'react-router-dom';
 import { FaRegFile, FaSortUp, FaSortDown } from 'react-icons/fa';
 import clearIco from '../assets/images/clear-icon.png'; // Make sure your assets path is correct
-
+import ReactPaginate from 'react-paginate';
+import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from 'lucide-react';
 import "../../src/components/component-styles/Features.css"
 import { degreeList } from '@/constants/Constants';
 import Practitioner from '../components/model/Practitioner';
@@ -35,6 +36,7 @@ export default function SearchResultTable<T , Filters>({
   const [sorting, setSorting] = useState<SortingState>([]);
   const [filtering, setFiltering] = useState('');
   const [grouping, setGrouping] = useState<GroupingState>([]);
+  const [ selectedOptions,setSelectedOptions] = useState<string[]>([])
 
   const totalRecord = filteredData.length;
 
@@ -73,6 +75,26 @@ export default function SearchResultTable<T , Filters>({
   if (!degreeOptions || degreeOptions.length === 0) {
     degreeOptions = degreeList;
   }
+
+  function moveToFirstPage(){
+    table.setPageIndex(0)
+    setSelectedOptions([])
+  }
+
+  function moveToPreviousPage(){
+    table.previousPage()
+    setSelectedOptions([])
+  }
+
+  function moveToNextPage(){
+    table.nextPage()
+    setSelectedOptions([])
+  }
+
+ function moveToLastPage(){
+   table.setPageIndex(table.getPageCount()-1)
+   setSelectedOptions([])
+ }
 
   return (
     <div>
@@ -204,50 +226,60 @@ export default function SearchResultTable<T , Filters>({
      
 
       {/* Pagination features */}
-      <div className="pagination-features" style={{ marginTop: '10px' }}>
-        <button
-          className="btn btn-primary"
-          onClick={() => table.setPageIndex(0)}
-          disabled={!table.getCanPreviousPage()}
-        >
-          First
-        </button>
-        <button
-          className="btn btn-primary"
-          onClick={() => table.previousPage()}
-          disabled={!table.getCanPreviousPage()}
-        >
-          Previous
-        </button>
-
-        <select
-          className="form-select mx-2"
-          style={{ width: 'auto', display: 'inline-block' }}
-          value={table.getState().pagination.pageSize}
-          onChange={(e) => table.setPageSize(Number(e.target.value))}
-        >
-          {[10, 25, 50, 100].map((pageSize) => (
-            <option key={pageSize} value={pageSize}>
-              Show {pageSize}
-            </option>
-          ))}
-        </select>
-
-        <button
-          className="btn btn-primary"
-          onClick={() => table.nextPage()}
-          disabled={!table.getCanNextPage()}
-        >
-          Next
-        </button>
-        <button
-          className="btn btn-primary"
-          onClick={() => table.setPageIndex(table.getPageCount() - 1)}
-          disabled={!table.getCanNextPage()}
-        >
-          Last
-        </button>
-      </div>
+   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: 16, gap: 8 }}>
+  {/* Double-left (First) */}
+  <button
+    className="page-item"
+    style={{ border: '1px solid #ddd', borderRadius: 4, background: 'none', padding: 4, cursor: 'pointer' }}
+    onClick={() => { table.setPageIndex(0); setSelectedOptions([]); }}
+    disabled={!table.getCanPreviousPage()}
+    aria-label="First Page"
+  >
+    <ChevronsLeft size={18} />
+  </button>
+  {/* Single-left (Previous) */}
+  <ReactPaginate
+    breakLabel="..."
+    previousLabel={<ChevronLeft size={18} />}
+    nextLabel={<ChevronRight size={18} />}
+    onPageChange={e => { table.setPageIndex(e.selected); setSelectedOptions([]); }}
+    pageCount={table.getPageCount()}
+    forcePage={table.getState().pagination.pageIndex}
+    marginPagesDisplayed={1}
+    pageRangeDisplayed={5}
+    containerClassName="pagination"
+    pageClassName="page-item"
+    pageLinkClassName="page-link"
+    previousClassName="page-item"
+    nextClassName="page-item"
+    breakClassName="page-item"
+    breakLinkClassName="page-link"
+    activeClassName="active"
+    disableInitialCallback
+    renderOnZeroPageCount={null}
+  />
+  {/* Single-right (Next) */}
+  <button
+    className="page-item"
+    style={{ border: '1px solid #ddd', borderRadius: 4, background: 'none', padding: 4, cursor: 'pointer' }}
+    onClick={() => { table.nextPage(); setSelectedOptions([]); }}
+    disabled={!table.getCanNextPage()}
+    aria-label="Next Page"
+  >
+    <ChevronsRight size={18} />
+  </button>
+  {/* Page size select */}
+  <select
+    className="page-item"
+    style={{ marginLeft: 8, borderRadius: 4, border: '1px solid #ddd', padding: '4px 10px' }}
+    value={table.getState().pagination.pageSize}
+    onChange={e => table.setPageSize(Number(e.target.value))}
+  >
+    {[10, 25, 50, 100].map(size => (
+      <option key={size} value={size}>{size}</option>
+    ))}
+  </select>
+</div>
     </div>
   );
 }

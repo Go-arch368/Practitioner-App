@@ -702,3 +702,37 @@ thead th .sort-link:hover {
   margin-right: 1.2rem;
   white-space: nowrap;
 }
+
+/* This is for pagination*/
+
+.pagination {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  list-style: none;
+  padding: 0;
+}
+
+.page-item {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background: none;
+}
+
+.page-link, .page-item > svg, .page-item > select {
+  display: block;
+  padding: 6px 12px;
+  cursor: pointer;
+  text-decoration: none;
+  color: #007bff;
+}
+
+.page-item:hover .page-link, .page-item:hover > svg {
+  background-color: #f0f0f0;
+}
+
+.active .page-link {
+  background-color: #d8ebfb;
+  color: #1976d2;
+  border-color: #9ad1f7;
+}
