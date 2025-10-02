@@ -25,6 +25,7 @@ import ExpandableComponent,{ExpandedComponentRef} from '@/utils/ExpandableCompon
 import ErrorModal from '@/utils/ErrorModal';
 import { retrieveConfig, setLimitOnFormData } from '@/utils/MP3Utility';
 import ToolTip from '@/components/common/ToolTip';
+import { mockPractitioners } from '../../practitionerResults/mockPractitioners';
 
 const ADVANCED_FIELDS = [
   "CAQH Provider ID",
@@ -188,7 +189,7 @@ const ProviderSearchPractitioner: React.FC = () => {
         </div>
       </Form>
       <div className="results-wrapper">
-        {shouldFetch && showResult && practitioners.length > 0 && <DataTable mData={practitioners} />}
+       <DataTable mData={practitioners.length > 0 ? practitioners : mockPractitioners} />
         {noResult && <NoResult />}
         {showErrorPage && <ErrorPage appError={error} />}
       </div>

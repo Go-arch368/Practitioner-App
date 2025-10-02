@@ -1,11 +1,14 @@
 import React, { useMemo, useState } from 'react';
 import { ColumnDef } from '@tanstack/react-table';
-import { Link } from 'react-router-dom';
+import Link from "next/link";
+
 import { FaRegFile } from 'react-icons/fa';
 import SearchResultTable from '@/utils/SearchResultTable';
 // import '@/component-styles/Features.css';
 import { Filters } from './PractitionerFilters';
 import Practitioner from '../../model/Practitioner';
+
+
 
 interface Props {
   mData: Practitioner[];
@@ -207,8 +210,7 @@ const filteredData = useMemo(() => {
                 const practitioner = row.original;
                 return (
                   <Link
-                    to={`/view-practitioner/${practitioner.providerId}`}
-                    state={{ practitioner }}
+                    href={`/view-practitioner/${practitioner.providerId}`}
                     style={{ cursor: 'pointer' }}
                   >
                     <FaRegFile title="View Practitioner" />

@@ -11,12 +11,13 @@ import {
   GroupingState,
   ColumnDef,
 } from '@tanstack/react-table';
+import Pagination from './Pagination';
 import { Link } from 'react-router-dom';
 import { FaRegFile, FaSortUp, FaSortDown } from 'react-icons/fa';
 import clearIco from '../assets/images/clear-icon.png'; // Make sure your assets path is correct
 import ReactPaginate from 'react-paginate';
 import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from 'lucide-react';
-import "../../src/components/component-styles/Features.css"
+import "../../src/components/component-styles/Features.css";
 import { degreeList } from '@/constants/Constants';
 import Practitioner from '../components/model/Practitioner';
 
@@ -76,24 +77,12 @@ export default function SearchResultTable<T , Filters>({
     degreeOptions = degreeList;
   }
 
-  function moveToFirstPage(){
-    table.setPageIndex(0)
-    setSelectedOptions([])
-  }
 
-  function moveToPreviousPage(){
-    table.previousPage()
-    setSelectedOptions([])
-  }
 
-  function moveToNextPage(){
-    table.nextPage()
-    setSelectedOptions([])
-  }
-
- function moveToLastPage(){
-   table.setPageIndex(table.getPageCount()-1)
-   setSelectedOptions([])
+ // Add this function to handle page changes from Pagination component
+ function handlePageChange(selectedPage: number) {
+   table.setPageIndex(selectedPage);
+   setSelectedOptions([]);
  }
 
   return (
@@ -226,60 +215,22 @@ export default function SearchResultTable<T , Filters>({
      
 
       {/* Pagination features */}
-   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: 16, gap: 8 }}>
-  {/* Double-left (First) */}
-  <button
-    className="page-item"
-    style={{ border: '1px solid #ddd', borderRadius: 4, background: 'none', padding: 4, cursor: 'pointer' }}
-    onClick={() => { table.setPageIndex(0); setSelectedOptions([]); }}
-    disabled={!table.getCanPreviousPage()}
-    aria-label="First Page"
-  >
-    <ChevronsLeft size={18} />
-  </button>
-  {/* Single-left (Previous) */}
-  <ReactPaginate
-    breakLabel="..."
-    previousLabel={<ChevronLeft size={18} />}
-    nextLabel={<ChevronRight size={18} />}
-    onPageChange={e => { table.setPageIndex(e.selected); setSelectedOptions([]); }}
-    pageCount={table.getPageCount()}
-    forcePage={table.getState().pagination.pageIndex}
-    marginPagesDisplayed={1}
-    pageRangeDisplayed={5}
-    containerClassName="pagination"
-    pageClassName="page-item"
-    pageLinkClassName="page-link"
-    previousClassName="page-item"
-    nextClassName="page-item"
-    breakClassName="page-item"
-    breakLinkClassName="page-link"
-    activeClassName="active"
-    disableInitialCallback
-    renderOnZeroPageCount={null}
-  />
-  {/* Single-right (Next) */}
-  <button
-    className="page-item"
-    style={{ border: '1px solid #ddd', borderRadius: 4, background: 'none', padding: 4, cursor: 'pointer' }}
-    onClick={() => { table.nextPage(); setSelectedOptions([]); }}
-    disabled={!table.getCanNextPage()}
-    aria-label="Next Page"
-  >
-    <ChevronsRight size={18} />
-  </button>
-  {/* Page size select */}
-  <select
-    className="page-item"
-    style={{ marginLeft: 8, borderRadius: 4, border: '1px solid #ddd', padding: '4px 10px' }}
-    value={table.getState().pagination.pageSize}
-    onChange={e => table.setPageSize(Number(e.target.value))}
-  >
-    {[10, 25, 50, 100].map(size => (
-      <option key={size} value={size}>{size}</option>
-    ))}
-  </select>
-</div>
+ <Pagination
+        pageCount={table.getPageCount()}
+        currentPage={table.getState().pagination.pageIndex}
+        onPageChange={handlePageChange}
+        canPreviousPage={table.getCanPreviousPage()}
+        canNextPage={table.getCanNextPage()}
+        goToFirstPage={() => { table.setPageIndex(0); setSelectedOptions([]); }}
+        goToLastPage={() => { table.setPageIndex(table.getPageCount() - 1); setSelectedOptions([]); }}
+        goToPreviousPage={() => { table.previousPage(); setSelectedOptions([]); }}
+        goToNextPage={() => { table.nextPage(); setSelectedOptions([]); }}
+        pageSize={table.getState().pagination.pageSize}
+        setPageSize={(size) => table.setPageSize(size)}
+      />
+
+
+
     </div>
   );
 }
