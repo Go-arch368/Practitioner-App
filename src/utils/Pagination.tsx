@@ -63,9 +63,9 @@ export default function Pagination({
 
       <button
         style={{ border: '1px solid #ddd', borderRadius: 4, background: '#fff', padding: 4, cursor: 'pointer' }}
-        onClick={goToNextPage}
-        disabled={!canNextPage}
-        aria-label="Next Page"
+        onClick={goToLastPage}
+        disabled={currentPage===pageCount-1}
+        aria-label="Last Page "
       >
         <ChevronsRight size={18} />
       </button>
