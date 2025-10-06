@@ -56,7 +56,7 @@ export const mockPractitioners: Practitioner[] = [
 
 // If you want to test pagination properly,
 // generate 50–100 mock records programmatically:
-for (let i = 4; i <= 50; i++) {
+for (let i = 4; i <= 100; i++) {
   mockPractitioners.push({
     providerId: `P${i.toString().padStart(3, "0")}`,
     credId: `CRED${i.toString().padStart(3, "0")}`,

@@ -54,6 +54,12 @@ export default function SearchResultTable<T , Filters>({
       globalFilter: filtering,
       grouping,
     },
+    initialState:{
+      pagination:{
+       pageIndex:0,
+       pageSize:50
+      }
+    },
     onSortingChange: setSorting,
     onGlobalFilterChange: setFiltering,
     onGroupingChange: setGrouping,
@@ -228,9 +234,6 @@ export default function SearchResultTable<T , Filters>({
         pageSize={table.getState().pagination.pageSize}
         setPageSize={(size) => table.setPageSize(size)}
       />
-
-
-
     </div>
   );
 }

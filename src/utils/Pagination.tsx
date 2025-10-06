@@ -1,4 +1,4 @@
-import React from 'react';
+
 import ReactPaginate from 'react-paginate';
 import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from 'lucide-react';
 
@@ -76,7 +76,7 @@ export default function Pagination({
         value={pageSize}
         onChange={(e) => setPageSize(Number(e.target.value))}
       >
-        {[5, 10, 25, 50, 100].map((size) => (
+        {[10, 25, 50, 100].map((size) => (
           <option key={size} value={size}>{size}</option>
         ))}
       </select>
