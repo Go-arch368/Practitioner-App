@@ -1,8 +1,10 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import axios,{AxiosError} from "axios";
 import AllProvider from "@/components/model/AllProvider";
 import AllProviderService from "../services/AppProviderService"
 import { ReducerStates } from "./ReducerStates";
 import AppError from "@/components/model/AppError";
+
 
 // Default error object
 const errorObj: AppError = {
@@ -25,8 +27,11 @@ const initialState: AllProviderState = {
 };
 
 // Request interface
-interface AllProviderRequest {
-  [key: string]: any;
+
+
+type AllProviderRequest = Partial<AllProvider>&{
+  limit?:string,
+  page?:string
 }
 
 // Async thunk to fetch providers
@@ -36,25 +41,37 @@ export const fetchAllProviders = createAsyncThunk<
   { rejectValue: AppError }
 >(
   "allproviders/fetchAllProviders",
-  async (allProviderRequest: AllProviderRequest, { rejectWithValue }) => {
+  async (allProviderRequest, { rejectWithValue }) => {
     try {
-      const response = await AllProviderService.searchAllProviders(allProviderRequest);
+      const response = await AllProviderService.searchAllProviders<AllProvider[], AllProviderRequest>(allProviderRequest);
 
       if (response.status !== 200) {
-        const errorResponse: AppError = {
+        return rejectWithValue({
           errorStatus: response.status,
-          message: response.response?.data?.message || "Something went wrong",
-        };
-        return rejectWithValue(errorResponse);
+          message: "Something went wrong",
+        });
       }
 
-      const data: AllProvider[] = response.data;
-      return data;
-    } catch (error: any) {
-      return rejectWithValue(error);
-    }
+      return response.data; // TS now knows this is AllProvider[]
+    } catch (e) {
+  if (axios.isAxiosError(e)) {
+    const err: AppError = {
+      errorStatus: e.response?.status || 500,
+      message: (e.response?.data as { message?: string })?.message || e.message || "Unknown error",
+    };
+    return rejectWithValue(err);
+  } else if (e instanceof Error) {
+    // Only access message if it's an Error
+    return rejectWithValue({ errorStatus: 500, message: e.message });
+  } else {
+    return rejectWithValue({ errorStatus: 500, message: "Unknown error" });
+  }
+}
+
+
   }
 );
+
 
 // Slice
 export const AllProviderSlice = createSlice({

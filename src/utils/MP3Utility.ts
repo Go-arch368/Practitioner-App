@@ -2,7 +2,7 @@
 
   // Generic type for full form data, adjust as needed for actual provider shape
   export interface FullFormData {
-    [key: string]: any;
+    [key: string]: unknown;
   }
 
   // Retrieve a param's value from a config list

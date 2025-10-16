@@ -7,11 +7,18 @@ import Config from '@/components/model/Config';
 export const fetchConfigData = createAsyncThunk(
   'configData/fetchConfigData',
   async () => {
-    const respConfigs = await fetchGetRequest(ServiceURLs.GET_CONFIG_DATA);
-    const configList: Config[] = respConfigs?.data ?? [];
+    // Tell TypeScript what the response data type is
+    const respConfigs = await fetchGetRequest<{ configList: Config[] }>(
+      ServiceURLs.GET_CONFIG_DATA
+    );
+
+    // Extract the list safely
+    const configList: Config[] = respConfigs.data?.configList ?? [];
+
     return { configList };
   }
 );
+
 
 // State type definition
 type ConfigDataState = {

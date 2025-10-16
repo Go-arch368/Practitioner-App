@@ -9,7 +9,7 @@ type FormFieldType = {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onBlur: () => void;
   validate: () => string | null;
-  setValue: React.Dispatch<React.SetStateAction<any>>;
+   setValue: React.Dispatch<React.SetStateAction<string | string[]>>;
   format?: (value: string) => string;
   options?: string[];
   isMulti?: boolean;
@@ -26,7 +26,6 @@ return(
     <label htmlFor={field.name} className="label-fixed">
       {field.label}
     </label>
-
     
       <input
         id={field.name}

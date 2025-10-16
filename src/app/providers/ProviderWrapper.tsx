@@ -10,6 +10,4 @@ interface Props{
 
 export default function ReduxProviderWrapper({children}:Props){
     return <Provider store={store}>{children}</Provider>
-        
-    
 }

@@ -1,12 +1,18 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { fetchGetRequest } from '../services/Service';
 import ServiceURLs from '@/services/serviceURL';
+import { DropdownItem, StateItem } from '@/components/common/CommonFunction';
+import { OptionType } from '@/constants/stateSelect';
+interface MetadataApiResponse {
+  stateList: StateItem[];
+  networkList: DropdownItem[]; // ✅ Ensure this matches the API response
+}
 
 // Async thunk for fetching metadata
 export const fetchMetadata = createAsyncThunk(
   'metadata/fetchMetadata',
   async () => {
-    const resp = await fetchGetRequest(ServiceURLs.GET_REF_DATA);
+    const resp = await fetchGetRequest<MetadataApiResponse>(ServiceURLs.GET_REF_DATA);
     const stateList = resp?.data?.stateList ?? [];
     const networkList = resp?.data?.networkList ?? []; // ✅ Ensure this is included in the API or mocked
     return { stateList, networkList };
@@ -18,12 +24,12 @@ type MetadataState = {
   loading: boolean;
   error: string | null;
   statesMetadata: {
-    stateList: any[];
-    networkList: any[]; // ✅ Now correctly typed
+    stateList: StateItem[];
+    networkList: DropdownItem[]; // ✅ Now correctly typed
   };
-  categoryMetadata: any[];
+  categoryMetadata: string[];
   previousStateSelection: {
-    selectState: any[];
+    selectState: OptionType[];
   };
 };
 

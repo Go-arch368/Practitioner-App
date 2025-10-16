@@ -14,6 +14,11 @@ interface Props {
   mData: Practitioner[];
 }
 
+interface MyColumnMeta {
+  tooltip?: string;
+}
+
+
 export default function PractitionerDataTable({ mData }: Props) {
   // Visible columns state - adjust visibility dynamically if needed
   const [visibleColumns, setVisibleColumns] = useState<Record<keyof Practitioner, boolean>>({
@@ -147,87 +152,76 @@ const filteredData = useMemo(() => {
 
 
   // Define columns with custom cell renderers when needed
-  const columnMeta: { label: string; accessorKey: keyof Practitioner }[] = [
-    { label: 'Provider Id', accessorKey: 'providerId' },
-    { label: 'Cred Id', accessorKey: 'credId' },
-    { label: 'Last Name', accessorKey: 'lastName' },
-    { label: 'First Name', accessorKey: 'firstName' },
-    { label: 'Middle', accessorKey: 'middleName' },
-    { label: 'Degree(s)', accessorKey: 'degrees' },
-    { label: 'Primary Specialty', accessorKey: 'primarySpecialty' },
-    { label: 'Network(s)/Status', accessorKey: 'networkStatus' },
-    { label: 'Primary Service City', accessorKey: 'primaryServiceCity' },
-    { label: 'Primary Service State', accessorKey: 'primaryServiceState' },
-    { label: 'Primary Service Zip', accessorKey: 'primaryServiceZip' },
-    { label: 'TIN(s)', accessorKey: 'tin' },
-    { label: 'NPI Type 1', accessorKey: 'npiType1' },
-    { label: 'Original Record Id', accessorKey: 'originalRecordId' },
-  ];
+const columnMeta: { label: string; accessorKey: keyof Practitioner; tooltip?: string }[] = [
+  { label: 'Provider Id', accessorKey: 'providerId', tooltip: 'Provider Id' },
+  { label: 'Cred Id', accessorKey: 'credId' },
+  { label: 'Last Name', accessorKey: 'lastName' },
+  { label: 'First Name', accessorKey: 'firstName' },
+  { label: 'Middle', accessorKey: 'middleName' },
+  { label: 'Degree(s)', accessorKey: 'degrees' },
+  { label: 'Primary Specialty', accessorKey: 'primarySpecialty', tooltip: 'Primary' },
+  { label: 'Network(s)/Status', accessorKey: 'networkStatus' },
+  { label: 'Primary Service City', accessorKey: 'primaryServiceCity', tooltip: 'Primary Service City' },
+  { label: 'Primary Service State', accessorKey: 'primaryServiceState', tooltip: 'Primary service state' },
+  { label: 'Primary Service Zip', accessorKey: 'primaryServiceZip', tooltip: 'Primary service zip' },
+  { label: 'TIN(s)', accessorKey: 'tin' },
+  { label: 'NPI Type 1', accessorKey: 'npiType1' },
+  { label: 'Original Record Id', accessorKey: 'originalRecordId' },
+];
+   
 
   // Define columns using columnMeta
-  const columns = useMemo<ColumnDef<Practitioner>[]>(
-    () =>
-      columnMeta
-        .filter((col) => visibleColumns[col.accessorKey])
-        .map((col) => {
-          if (col.accessorKey === 'networkStatus') {
-            return {
-              accessorKey: col.accessorKey,
-              header: col.label,
-              cell: ({ row }: any) => {
-                const statuses = (row.original.networkStatus ?? '').split(',');
-                return (
-                  <div>
-                    {statuses.map((status: string, idx: number) => (
-                      <div key={idx}>{status.trim()}</div>
-                    ))}
-                  </div>
-                );
-              },
-            };
-          } else if (col.accessorKey === 'tin') {
-            return {
-              accessorKey: col.accessorKey,
-              header: col.label,
-              cell: ({ row }: any) => {
-                const tins = (row.original.tin ?? '').split(',');
-                return (
-                  <div>
-                    {tins.map((tin: string, idx: number) => (
-                      <div key={idx} style={{ whiteSpace: 'nowrap' }}>
-                        {tin.trim()}
-                      </div>
-                    ))}
-                  </div>
-                );
-              },
-            };
-          } else if (col.accessorKey === 'providerId') {
-            return {
-              accessorKey: col.accessorKey,
-              header: col.label,
-              cell: ({ row }: any) => {
-                const practitioner = row.original;
-                return (
-                  <Link
-                    href={`/view-practitioner/${practitioner.providerId}`}
-                    style={{ cursor: 'pointer' }}
-                  >
-                    <FaRegFile title="View Practitioner" />
-                  </Link>
-                );
-              },
-            };
-          } else {
-            return {
-              accessorKey: col.accessorKey,
-              header: col.label,
-              cell: ({ row }: any) => row.original[col.accessorKey] ?? '',
-            };
-          }
-        }),
-    [visibleColumns]
-  );
+const columns = useMemo<ColumnDef<Practitioner>[]>(() =>
+  columnMeta
+    .filter((col) => visibleColumns[col.accessorKey])
+   .map((col) => ({
+    accessorKey: col.accessorKey,
+    header: () => (
+      <span title={(col.tooltip ?? '') as string}>
+        {col.label}
+      </span>
+    ),
+    meta: { tooltip: col.tooltip } as MyColumnMeta,
+      cell: ({ row }: any) => {
+        // Existing cell logic
+        if (col.accessorKey === 'networkStatus') {
+          const statuses = (row.original.networkStatus ?? '').split(',');
+          return (
+            <div>
+              {statuses.map((status: string, idx: number) => (
+                <div key={idx}>{status.trim()}</div>
+              ))}
+            </div>
+          );
+        } else if (col.accessorKey === 'tin') {
+          const tins = (row.original.tin ?? '').split(',');
+          return (
+            <div>
+              {tins.map((tin: string, idx: number) => (
+                <div key={idx} style={{ whiteSpace: 'nowrap' }}>
+                  {tin.trim()}
+                </div>
+              ))}
+            </div>
+          );
+        } else if (col.accessorKey === 'providerId') {
+          const practitioner = row.original;
+          return (
+            <Link
+              href={`/view-practitioner/${practitioner.providerId}`}
+              style={{ cursor: 'pointer' }}
+            >
+              <FaRegFile title="View Practitioner" />
+            </Link>
+          );
+        } else {
+          return row.original[col.accessorKey] ?? '';
+        }
+      },
+    })),
+  [visibleColumns]
+);
+
 
 
   return (

@@ -3,6 +3,7 @@ import Practitioner from '@/components/model/Practitioner';
 import PractitionerService from '../services/PractitionerService';
 import { ReducerStates } from './ReducerStates';
 import AppError from '@/components/model/AppError';
+import axios from "axios"
 
 interface PractitionersState {
   practitioners: Practitioner[];
@@ -23,39 +24,47 @@ const initialState: PractitionersState = {
   shouldFetch: true,
 };
 
-interface PractitionerRequest {
-  [key: string]: any; // Adapt this to your actual request structure
-}
+// Extend request type to allow extra params like limit/page
+export type PractitionerRequest = Partial<Practitioner> & {
+  limit?: string;
+  page?: string;
+};
 
-// Async thunk to fetch practitioners
+// Async thunk
 export const fetchPractitioners = createAsyncThunk<
   Practitioner[],
   PractitionerRequest,
   { rejectValue: AppError }
->(
-  'practitioners/fetchPractitioners',
-  async (practitionerRequest, { rejectWithValue }) => {
-    console.log("Before req", practitionerRequest)
-    try {
-      const response = await PractitionerService.searchPractitioner(practitionerRequest);
-      console.log("After req", response)
-      if (response.status !== 200) {
-        const errorResponse: AppError = {
-          errorStatus: response.status,
-          message: response.response?.data?.message || 'Unknown error',
-        };
-        return rejectWithValue(errorResponse);
-      }
-      const data: Practitioner[] = response.data;
-      return data;
-    } catch (error: any) {
-      return rejectWithValue({
-        errorStatus: error.status || 500,
-        message: error.message || 'Server Error',
-      });
+>('practitioners/fetchPractitioners', async (practitionerRequest:PractitionerRequest, { rejectWithValue }) => {
+  console.log("Before request:", practitionerRequest);
+  try {
+    const response = await PractitionerService.searchPractitioner(practitionerRequest);
+    console.log("After request:", response);
+
+    if (response.status !== 200) {
+      const errorResponse: AppError = {
+        errorStatus: response.status,
+        message: (response.data as { message?: string })?.message || 'Unknown error',
+      };
+      return rejectWithValue(errorResponse);
     }
-  }
-);
+
+    return response.data as Practitioner[];
+  } catch (e) {
+      if(axios.isAxiosError(e)){
+        const err : AppError = {
+          errorStatus : e.response?.status||500,
+          message:(e.response?.data as {message?:string})?.message || e.message || "unknown error"
+        }
+        return rejectWithValue(err)
+      }else if (e instanceof Error){
+        return rejectWithValue({errorStatus:500,message:e.message});
+        }
+       else{
+        return rejectWithValue({errorStatus:500,message:"Unknown error"})
+       }
+      }
+});
 
 export const PractitionersSlice = createSlice({
   name: 'practitioners',

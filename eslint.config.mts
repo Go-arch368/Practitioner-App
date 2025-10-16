@@ -59,22 +59,52 @@
 // ];
 
 // eslint.config.mts (FLAT config, for ESLint v9+)
-import tseslint from '@typescript-eslint/eslint-plugin';
-import tsParser from '@typescript-eslint/parser';
 
-export default [
-  {
-    files: ['**/*.{js,jsx,ts,tsx}'],
-    languageOptions: {
-      parser: tsParser,
-    },
-    plugins: {
-      '@typescript-eslint': tseslint,
-    },
-    rules: {
-    '@typescript-eslint/no-explicit-any': 'error',
-'@typescript-eslint/explicit-module-boundary-types': 'warn',
 
-    },
+import js from '@eslint/js';
+import globals from 'globals';
+import reactHooks from 'eslint-plugin-react-hooks';
+import tseslint from 'typescript-eslint';
+
+export default tseslint.config({
+  ignores: [
+    '.history/**',
+    'node_modules/**',
+    'build/**',
+    'dist/**',
+    '.next/**',
+    'coverage/**',
+    'src/vite-env.d.ts',
+    '.eslintrc.js',
+    'mocks/**',
+    'env.*.ts',
+    'eslint.config.js',
+    'jest.config.js',
+    'vite*.ts',
+    'eslint-formatters/**'
+  ],
+
+  extends: [
+    js.configs.recommended,
+    ...tseslint.configs.recommended
+  ],
+
+  files: ['**/*.{ts,tsx}'],
+
+  languageOptions: {
+    ecmaVersion: 2020,
+    globals: globals.browser
   },
-];
+
+  plugins: {
+    'react-hooks': reactHooks
+  },
+
+  rules: {
+    'react-hooks/rules-of-hooks': 'warn',
+    'react-hooks/exhaustive-deps': 'warn',
+    '@typescript-eslint/no-explicit-any': 'error',
+    '@typescript-eslint/explicit-module-boundary-types': 'warn'
+  }
+});
+

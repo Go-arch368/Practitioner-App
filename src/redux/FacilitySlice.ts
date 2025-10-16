@@ -2,6 +2,7 @@ import { createAsyncThunk,createSlice,PayloadAction } from "@reduxjs/toolkit";
 import { ReducerStates } from "./ReducerStates";
 import FacilityService from "@/services/FacilityService";
 import Facility from "@/components/model/Facility";
+import axios from "axios";
 import AppError from "@/components/model/AppError";
 
 
@@ -23,8 +24,10 @@ const initialState: FacilitiesState = {
   shouldFetch: true,
 };
 
-export interface FacilitiesRequest {
-  [key: string]: any; // Add actual fields as needed
+
+type FacilitiesRequest = Partial<Facility>&{
+  limit?:string;
+  page?:string
 }
 
 // Async thunk for fetching facilities
@@ -32,26 +35,44 @@ export const fetchFacilities = createAsyncThunk<
   Facility[],
   FacilitiesRequest,
   { rejectValue: AppError }
->("facilities/fetchFacilities", async (facilitiesRequest, { rejectWithValue }) => {
-  try {
-    const response = await FacilityService.searchFacility(facilitiesRequest);
-    if (response.status !== 200) {
-      const errorResponse: AppError = {
-        errorStatus: response.status,
-        message: response.response?.data?.message || "Failed to fetch facilities",
-      };
-      return rejectWithValue(errorResponse);
-    }
-    return response.data as Facility[];
-  } catch (error: any) {
-    const errorResponse: AppError = {
-      errorStatus: error?.response?.status || 500,
-      message: error?.response?.data?.message || error?.message || "Unknown error",
-    };
-    return rejectWithValue(errorResponse);
-  }
-});
+>(
+  "facilities/fetchFacilities",
+  async (facilitiesRequest, { rejectWithValue }) => {
+    try {
+      // 👇 Explicitly define response and request types
+      const response = await FacilityService.searchFacility<
+        Facility[],
+        FacilitiesRequest
+      >(facilitiesRequest);
 
+      if (response.status !== 200) {
+        return rejectWithValue({
+          errorStatus: response.status,
+          message:
+            (response.data as { message?: string })?.message ||
+            "Failed to fetch facilities",
+        });
+      }
+
+      return response.data;
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        return rejectWithValue({
+          errorStatus: error.response?.status || 500,
+          message:
+            error.response?.data?.message ||
+            error.message ||
+            "Unknown error",
+        });
+      }
+
+      return rejectWithValue({
+        errorStatus: 500,
+        message: "Unknown error",
+      });
+    }
+  }
+);
 // Slice
 const facilitySlice = createSlice({
   name: "facilities",

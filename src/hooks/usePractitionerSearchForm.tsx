@@ -54,6 +54,8 @@ export const usePractitionerSearchForm = () => {
     viantCEId
   ];
 
+  console.log(fields)
+
   const validateAll = () => fields.map(field => field.validate()).every(valid => valid);
   const hasAnyFieldFilled = () =>
     fields.some(field =>field.value?

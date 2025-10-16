@@ -26,6 +26,7 @@ import ErrorModal from '@/utils/ErrorModal';
 import { retrieveConfig, setLimitOnFormData } from '@/utils/MP3Utility';
 import ToolTip from '@/components/common/ToolTip';
 import { mockPractitioners } from '../../practitionerResults/mockPractitioners';
+import { OptionType } from '@/constants/stateSelect';
 
 const ADVANCED_FIELDS = [
   "CAQH Provider ID",
@@ -77,6 +78,8 @@ const ProviderSearchPractitioner: React.FC = () => {
     dispatch(noRecordFoundFalse());
     dispatch(resetPractitioners());
     dispatch(resetPractitionersShouldFetch());
+    stateSelectorRef.current?.setSelectedStates([])
+    networkTypeSelectorRef.current?.setSelectedNetwork({ value: '', label: '' })
     router.push('/');
   };
 
@@ -87,7 +90,7 @@ const ProviderSearchPractitioner: React.FC = () => {
     dispatch(setPractitionersShouldFetch());
     if (validateAll()) return;
     const fullFormData = getFormData();
-
+    
     const limitConfig = retrieveConfig(configList, 'SEARCH_LIMIT');
     setConfigLimit(limitConfig ?? '1000');
     const updatedFormData = setLimitOnFormData(limitConfig ?? '1000', fullFormData);
@@ -141,8 +144,14 @@ const ProviderSearchPractitioner: React.FC = () => {
                   {field.name === 'State' && field.isMulti ? (
                     <StateSelectorForm
                       ref={stateSelectorRef}
-                      initialSelection={Array.isArray(field.value) ? field.value : field.value ? [field.value] : []}
-                      onSelectionChange={selected => field.setValue(selected.map((s: any) => s.value))}
+                      initialSelection={
+                        Array.isArray(field.value)
+                          ? field.value.map((v: string) => ({ value: v, label: v }))
+                          : field.value
+                          ? [{ value: field.value, label: field.value }]
+                          : []
+                      }
+                      onSelectionChange={selected => field.setValue(selected.map((s: OptionType) => s.value))}
                     />
                   ) : (
                     <FormField field={field} />
@@ -155,11 +164,21 @@ const ProviderSearchPractitioner: React.FC = () => {
                 {advancedFields.map(field => (
                   <div className="form-group-wrapper" key={field.name}>
                     {field.name === "network" ? (
-                      <NetworkSelectorForm
-                        ref={networkTypeSelectorRef}
-                        initialSelection={Array.isArray(field.value) ? field.value[0] : field.value || ""}
-                        onSelectionChange={selected => field.setValue(selected ? selected.value : "")}
-                      />
+                  <NetworkSelectorForm
+  ref={networkTypeSelectorRef}
+  initialSelection={
+    Array.isArray(field.value)
+      ? { label: String(field.value[0]), value: String(field.value[0]) }
+      : field.value
+      ? { label: String(field.value), value: String(field.value) }
+      : ""
+  }
+  onSelectionChange={(selected) =>
+    field.setValue(selected ? selected.value : "")
+  }
+/>
+
+
                     ) : (
                       <FormField field={field} />
                     )}

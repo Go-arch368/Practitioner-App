@@ -23,7 +23,7 @@ import Practitioner from '../components/model/Practitioner';
 
 type TableProps<T, Filters> = {
   filteredData: T[];
-  columns: ColumnDef<T, any>[];
+  columns: ColumnDef<T>[];
   setFilters: React.Dispatch<React.SetStateAction<Filters>>;
   filters: Filters;
 };
@@ -67,22 +67,41 @@ export default function SearchResultTable<T , Filters>({
 
   const clearFilter = () => setFiltering('');
 
-  // Function to get unique values for filtering options e.g degrees
-  function getUniqueValue<T>(array: T[], key: string): any[] {
-    const valueSet = new Set<any>();
-    for (const item of array) {
-      if (item && typeof item === 'object' && key in item) {
-        valueSet.add((item as any)[key]);
-      }
-    }
-    return Array.from(valueSet);
-  }
+// This function is fine:
 
-  let degreeOptions = getUniqueValue(filteredData, 'degrees');
+  // Function to get unique values using unknown
+  // function getUniqueValue(array: unknown[], key: string): unknown[] {
+  //   const valueSet = new Set<unknown>();
+  //   for (const item of array) {
+  //     if (item && typeof item === 'object' && key in item) {
+  //       const obj = item as Record<string, unknown>;
+  //       valueSet.add(obj[key]);
+  //     }
+  //   }
+  //   return Array.from(valueSet);
+  // }
+
+  // // Usage: Get unique degree options
+  // let degreeOptions = getUniqueValue(filteredData, 'degrees').map(String);
+  // if (!degreeOptions || degreeOptions.length === 0) {
+  //   degreeOptions = degreeList;
+  // }
+
+   function getUniqueValue<K extends keyof T>(array: T[], key: K): Array<T[K]> {
+  const valueSet = new Set<T[K]>();
+  for (const item of array) {
+    if (item && typeof item === 'object' && key in item) {
+      valueSet.add(item[key]);
+    }
+  }
+  return Array.from(valueSet);
+}
+
+
+  let degreeOptions = getUniqueValue(filteredData, 'degrees' as keyof T).map(String); // This works if T['degrees'] is always string or can be reliably converted
   if (!degreeOptions || degreeOptions.length === 0) {
     degreeOptions = degreeList;
   }
-
 
 
  // Add this function to handle page changes from Pagination component
@@ -130,7 +149,8 @@ export default function SearchResultTable<T , Filters>({
 
                   // Render sortable column headers with sort icons and optional degree filter
                   return (
-                    <th key={header.id} className= 'sortable-header'>
+                    <th key={header.id} className= 'sortable-header'   title={(header.column.columnDef.meta as { tooltip?: string })?.tooltip ?? ''}>
+
                       <div className="header-content" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                         <span className="header-text">
                           {flexRender(header.column.columnDef.header, header.getContext())}
@@ -177,8 +197,8 @@ export default function SearchResultTable<T , Filters>({
                             No Filter
                           </option>
                           {degreeOptions.map((option) => (
-                            <option key={option} value={option}>
-                              {option}
+                            <option key={String(option)} value={String(option)}>
+                              {String(option)}
                             </option>
                           ))}
                         </select>
@@ -206,13 +226,12 @@ export default function SearchResultTable<T , Filters>({
                 {row.getVisibleCells().map((cell) => (
                  <td key={cell.id}>
   {"originalRecordId" in (row.original as object) &&
-  (row.original as any).originalRecordId ? (
+  (row.original as Practitioner).originalRecordId ? (
     flexRender(cell.column.columnDef.cell, cell.getContext())
   ) : (
     <del>{flexRender(cell.column.columnDef.cell, cell.getContext())}</del>
   )}
 </td>
-
                 ))}
               </tr>
             ))}

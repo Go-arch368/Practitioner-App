@@ -9,7 +9,7 @@ import { OptionType } from ".";
 interface SelectStateProps {
   stateOptions: {label:string;value:string}[];
   initialSelection: OptionType[];
-  handleStatesUpdate: (selectedValues: any[], name: string) => void;
+  handleStatesUpdate: (selectedValues: OptionType[], name: string) => void;
 }
 
 const SelectState: React.FC<SelectStateProps> = ({

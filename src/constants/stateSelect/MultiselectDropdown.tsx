@@ -2,9 +2,10 @@
 
 import React, { useEffect, useState } from "react";
 import { Form } from "react-bootstrap";
-import ReactSelect, { components, createFilter, OptionProps } from "react-select";
+import ReactSelect, { components, createFilter} from "react-select";
 import { getOptions } from "@/components/common/CommonFunction";
 import { OptionType } from ".";
+import { OptionProps } from "react-select";
 
 interface DropDownProps {
   name: string;
@@ -20,7 +21,7 @@ interface DropDownProps {
 const MultiselectDropdown= (props:DropDownProps) => {
  
   const {name,options,initialSelection,inputId} = props
-  const [selectedValues, setSelectedValues] = useState<OptionType[]>(initialSelection || []);
+  const [selectedValues, setSelectedValues] = useState<OptionType[]>(initialSelection || []); 
 
   useEffect(() => {
     props.updateSelectedOptions( selectedValues,name);
@@ -30,7 +31,7 @@ const MultiselectDropdown= (props:DropDownProps) => {
     setSelectedValues(initialSelection||[])
   },[initialSelection])
 
-  const Option = (props: any) => {
+  const Option = (props:any) => {
     return (
       <div data-testid={props.label}>
         <components.Option {...props} style={{ borderRadius: "var(--ba-border-radius)" }}>
@@ -46,11 +47,13 @@ const MultiselectDropdown= (props:DropDownProps) => {
     );
   };
 
-  const handleChange = (changedOptions: any) => {
-    const values = getOptions(changedOptions, selectedValues, options);
-    setSelectedValues(values);
-    
-  };
+  const handleChange = (changedOptions: readonly OptionType[] | null) => {
+  // Convert readonly array (from ReactSelect) or null to mutable OptionType[]
+  const arrayOptions : OptionType[] = changedOptions ? Array.from(changedOptions) : [];
+  const values = getOptions(arrayOptions, selectedValues, options);
+  setSelectedValues(values);
+};
+
 
   return (
     <div

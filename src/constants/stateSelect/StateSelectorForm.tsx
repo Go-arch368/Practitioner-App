@@ -5,16 +5,17 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import SelectState from "./SelectState"; // Import OptionType from SelectState
 import { getStateOptions } from "@/components/common/CommonFunction";
+import { OptionType } from ".";
 
 export interface StateSelectorFormRef {
-  setSelectedStates: (states: any[]) => void;
+  setSelectedStates: (states: OptionType[]) => void;
 }
 
 interface StateSelectorFormProps {
-  initialSelection?: any[];
-  onSelectionChange?: (selected: any[]) => void;
+  initialSelection?: OptionType[];
+  onSelectionChange?: (selected: OptionType[]) => void;
 }
-
+  
 const StateSelectorForm = forwardRef<StateSelectorFormRef, StateSelectorFormProps>(
   ({ initialSelection = [], onSelectionChange }, ref) => {
     // Redux state and dropdown options
@@ -24,17 +25,17 @@ const StateSelectorForm = forwardRef<StateSelectorFormRef, StateSelectorFormProp
     const stateOptions = useMemo(() => getStateOptions(stateList), [stateList]);
     
     // Controlled selection state
-    const [selectedStates, setSelectedStates] = useState<any[]>(initialSelection);
+    const [selectedStates, setSelectedStates] = useState<OptionType[]>(initialSelection);
 
     // Handles selection updates
-    const handleStatesUpdate = (selectedValues: any[]) => {
+    const handleStatesUpdate = (selectedValues: OptionType[]) => {
       setSelectedStates(selectedValues);
       onSelectionChange?.(selectedValues);
     };
 
     // Ref handle for parent control
     useImperativeHandle(ref, () => ({
-      setSelectedStates: (states: any[]) => setSelectedStates(states),
+      setSelectedStates: (states: OptionType[]) => setSelectedStates(states),
     }));
 
     return (

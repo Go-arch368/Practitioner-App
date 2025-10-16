@@ -1,11 +1,9 @@
 import { fetchPostRequest } from "./Service";
 
-interface Provider {
-  [key: string]: any; // Adjust this to your actual provider object structure
-}
+
 
 class PractitionerService {
-  searchPractitioner(provider: Provider) {
+  searchPractitioner<T extends object>(provider: T) {
     const hostname = process.env.NEXT_PUBLIC_API_HOST;
     const port = process.env.NEXT_PUBLIC_API_PORT;
     const PRACTITIONER_API_BASE_URL = `${hostname}:${port}/api/v1/searchprac`;

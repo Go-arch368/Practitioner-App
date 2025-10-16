@@ -36,15 +36,15 @@ export interface OptionType{
  */
 
 export function getOptions(
-  options: any,
-  selectedValues: OptionType[],
-  data: OptionType[]
+  options: OptionType[], // which contains all the values 
+  selectedValues: OptionType[], // current value
+  data: OptionType[] // newly selected data
 ): OptionType[] {
   let values: OptionType[] = [];
 
   if (options && options.length > 0) {
     const allIndex = options.findIndex(
-      (op:any) => op.value === "*" || op.value.split(":")[1] === "*"
+      (op:OptionType) => op.value === "*" || op.value.split(":")[1] === "*"
     );
 
     if (allIndex > -1) {
